@@ -11,6 +11,7 @@
 		48327066233A786B008AA777 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48327065233A786B008AA777 /* ViewController.swift */; };
 		48327068233A786C008AA777 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48327067233A786C008AA777 /* Assets.xcassets */; };
 		4832706B233A786C008AA777 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48327069233A786C008AA777 /* Main.storyboard */; };
+		483E3500233E778300E6703E /* SimctlCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48327073233A78D6008AA777 /* SimctlCommand.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		4832706A233A786C008AA777 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4832706C233A786C008AA777 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4832706D233A786C008AA777 /* SimBatchDelete.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimBatchDelete.entitlements; sourceTree = "<group>"; };
+		48327073233A78D6008AA777 /* SimctlCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimctlCommand.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 			children = (
 				48327063233A786B008AA777 /* AppDelegate.swift */,
 				48327065233A786B008AA777 /* ViewController.swift */,
+				48327073233A78D6008AA777 /* SimctlCommand.swift */,
 				48327067233A786C008AA777 /* Assets.xcassets */,
 				48327069233A786C008AA777 /* Main.storyboard */,
 				4832706C233A786C008AA777 /* Info.plist */,
@@ -133,6 +136,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				483E3500233E778300E6703E /* SimctlCommand.swift in Sources */,
 				48327066233A786B008AA777 /* ViewController.swift in Sources */,
 				48327064233A786B008AA777 /* AppDelegate.swift in Sources */,
 			);
@@ -202,7 +206,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -256,7 +260,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -273,7 +277,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Q55Z242J3Y;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				INFOPLIST_FILE = SimBatchDelete/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -293,7 +297,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Q55Z242J3Y;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				INFOPLIST_FILE = SimBatchDelete/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
