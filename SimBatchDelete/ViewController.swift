@@ -44,13 +44,14 @@ class ViewController: NSViewController {
         }
     }
     private var simulators: [SimViewModel] = []
-    private var selectedSimIds: Set<UUID> = [] {
+    private var selectedSims: [UUID: SimViewModel] = [:] {
         didSet {
-            if oldValue.isEmpty != self.selectedSimIds.isEmpty {
-                self.deleteSelectedSimsButton.isEnabled = !self.selectedSimIds.isEmpty
+            if oldValue.isEmpty != self.selectedSims.isEmpty {
+                self.deleteSelectedSimsButton.isEnabled = !self.selectedSims.isEmpty
             }
         }
     }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,56 +68,14 @@ class ViewController: NSViewController {
         }
     }
 
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
+    override func viewDidAppear() {
+        super.viewDidAppear()
+
+        self.reloadData()
     }
 
     @IBAction private func run(_ sender: Any) {
-        self.parser.run { [weak self] result in
-            print("Parser returned \(result)")
-
-            switch result {
-            case .success(let sims):
-                self?.sims = sims
-                let runtimes = Dictionary(grouping: sims.runtimes) { $0.identifier }
-                // Map devices and the OS versions
-                self?.simulators = sims.devices.flatMap { d -> [SimViewModel] in
-                    let (runtimeId, devices) = d
-                    let runtime = runtimes[runtimeId]?.first
-
-                    let runtimeName = runtime?.name ?? "Unavailable"
-                    let comment = runtime == nil ? runtimeId.split(separator: ".").last.map { $0 + ": " } ?? "" : ""
-
-                    return devices.map {
-                        return SimViewModel(identifier: $0.udid, name: $0.name, version: runtimeName, available: $0.isAvailable ? "Yes" : "No", state: $0.state.rawValue, comment: comment + ($0.availabilityError ?? ""))
-                    }
-                }.sorted { (m1, m2) -> Bool in
-                    if m1.version == m2.version {
-                        return m1.name.compare(m2.name, options: [.caseInsensitive]) == .orderedAscending
-                    }
-                    else if m1.version == "Unavailable" {
-                        // Unavailable goes to the bottom
-                        return false
-                    }
-                    else if m2.version == "Unavailable" {
-                        // Unavailable goes to the bottom
-                        return true
-                    }
-                    else {
-                        return m1.version.compare(m2.version, options: [.caseInsensitive]) == .orderedAscending
-                    }
-                }
-            case .failure(let error):
-                print("Parser returned error: \(error)")
-                self?.sims = nil
-                self?.simulators = []
-            }
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-            }
-        }
+        self.reloadData()
     }
 
     @IBAction private func selectionChanged(_ sender: NSButton) {
@@ -127,17 +86,87 @@ class ViewController: NSViewController {
 
         switch sender.state {
         case .on:
-            self.selectedSimIds.insert(sim.identifier)
+            self.selectedSims[sim.identifier] = sim
         case .off:
-            self.selectedSimIds.remove(sim.identifier)
+            self.selectedSims.removeValue(forKey: sim.identifier)
         default:
             break
         }
     }
 
     @IBAction private func deleteSelectedDevices(_ sender: NSButton) {
-        for sim in self.simulators {
-            // TODO: Call the 'delete' command
+        let simsToDelete = self.selectedSims
+        self.selectedSims.removeAll()
+
+        var simsToDeleteCount = simsToDelete.count
+        for sim in simsToDelete.values {
+            self.parser.deleteDevice(sim.identifier) { [weak self] result in
+                DispatchQueue.main.async {
+                    simsToDeleteCount -= 1
+                    switch result {
+                    case .success:
+                        print("\(sim.name) delete successful")
+                    case .failure(let err):
+                        print("\(sim.name) deletion error: \(err)")
+                    }
+
+                    if (simsToDeleteCount <= 0) {
+                        self?.reloadData()
+                    }
+                }
+            }
+        }
+    }
+
+    private func reloadData() {
+        self.loadButton?.isEnabled = false
+        self.parser.run { [weak self] result in
+            print("Parser returned \(result)")
+
+            switch result {
+            case .success(let sims):
+                self?.processSimulators(sims)
+            case .failure(let error):
+                print("Parser returned error: \(error)")
+                self?.sims = nil
+                self?.simulators = []
+            }
+            DispatchQueue.main.async {
+                self?.loadButton?.isEnabled = true
+                self?.tableView.reloadData()
+            }
+        }
+    }
+
+    private func processSimulators(_ sims: Simulators) {
+        self.sims = sims
+        let runtimes = Dictionary(grouping: sims.runtimes) { $0.identifier }
+        // Map devices and the OS versions
+        self.simulators = sims.devices.flatMap { d -> [SimViewModel] in
+            let (runtimeId, devices) = d
+            let runtime = runtimes[runtimeId]?.first
+
+            let runtimeName = runtime?.name ?? "Unavailable"
+            let comment = runtime == nil ? runtimeId.split(separator: ".").last.map { $0 + ": " } ?? "" : ""
+
+            return devices.map {
+                return SimViewModel(identifier: $0.udid, name: $0.name, version: runtimeName, available: $0.isAvailable ? "Yes" : "No", state: $0.state.rawValue, comment: comment + ($0.availabilityError ?? ""))
+            }
+        }.sorted { (m1, m2) -> Bool in
+            if m1.version == m2.version {
+                return m1.name.compare(m2.name, options: [.caseInsensitive]) == .orderedAscending
+            }
+            else if m1.version == "Unavailable" {
+                // Unavailable goes to the bottom
+                return false
+            }
+            else if m2.version == "Unavailable" {
+                // Unavailable goes to the bottom
+                return true
+            }
+            else {
+                return m1.version.compare(m2.version, options: [.caseInsensitive]) == .orderedAscending
+            }
         }
     }
 }
@@ -160,7 +189,7 @@ extension ViewController: NSTableViewDelegate {
 
         if case .checkbox = columnId {
             guard let checkbox = cell as? NSButton else { return nil }
-            checkbox.state = self.selectedSimIds.contains(sim.identifier) ? .on : .off
+            checkbox.state = self.selectedSims[sim.identifier] != nil ? .on : .off
         }
         else if let textField = (cell as? NSTableCellView)?.textField {
 
