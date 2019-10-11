@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4832705F233A786B008AA777"
-               BuildableName = "SimBatchDelete.app"
-               BlueprintName = "SimBatchDelete"
-               ReferencedContainer = "container:SimBatchDelete.xcodeproj">
+               BuildableName = "SimulatorControl.app"
+               BlueprintName = "SimulatorControl"
+               ReferencedContainer = "container:SimulatorControl.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,6 +29,8 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -45,11 +47,13 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4832705F233A786B008AA777"
-            BuildableName = "SimBatchDelete.app"
-            BlueprintName = "SimBatchDelete"
-            ReferencedContainer = "container:SimBatchDelete.xcodeproj">
+            BuildableName = "SimulatorControl.app"
+            BlueprintName = "SimulatorControl"
+            ReferencedContainer = "container:SimulatorControl.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -62,9 +66,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4832705F233A786B008AA777"
-            BuildableName = "SimBatchDelete.app"
-            BlueprintName = "SimBatchDelete"
-            ReferencedContainer = "container:SimBatchDelete.xcodeproj">
+            BuildableName = "SimulatorControl.app"
+            BlueprintName = "SimulatorControl"
+            ReferencedContainer = "container:SimulatorControl.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

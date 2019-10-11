@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14868"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -12,11 +11,11 @@
                 <application id="hnw-xV-0zn" sceneMemberID="viewController">
                     <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
                         <items>
-                            <menuItem title="SimBatchDelete" id="1Xt-HY-uBw">
+                            <menuItem title="SimulatorControl" id="1Xt-HY-uBw">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="SimBatchDelete" systemMenu="apple" id="uQy-DD-JDr">
+                                <menu key="submenu" title="SimulatorControl" systemMenu="apple" id="uQy-DD-JDr">
                                     <items>
-                                        <menuItem title="About SimBatchDelete" id="5kV-Vb-QxS">
+                                        <menuItem title="About SimulatorControl" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
@@ -25,7 +24,7 @@
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
                                         <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW"/>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
-                                        <menuItem title="Quit SimBatchDelete" keyEquivalent="q" id="4sb-4s-VLi">
+                                        <menuItem title="Quit SimulatorControl" keyEquivalent="q" id="4sb-4s-VLi">
                                             <connections>
                                                 <action selector="terminate:" target="Ady-hI-5gd" id="Te7-pn-YzF"/>
                                             </connections>
@@ -76,13 +75,13 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="htu-yL-8wZ">
-                                <rect key="frame" x="0.0" y="0.0" width="632" height="197"/>
+                                <rect key="frame" x="0.0" y="0.0" width="632" height="196"/>
                                 <clipView key="contentView" id="WrH-Zr-A73">
-                                    <rect key="frame" x="1" y="0.0" width="630" height="196"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <rect key="frame" x="1" y="0.0" width="630" height="195"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="wC5-Hw-6pd" viewBased="YES" id="hbE-Xh-L2W">
-                                            <rect key="frame" x="0.0" y="0.0" width="630" height="171"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="630" height="170"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -287,7 +286,7 @@
                                     <rect key="frame" x="1" y="192" width="478" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="qEq-1F-y0D">
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="qEq-1F-y0D">
                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -307,7 +306,7 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="d7S-PB-z8z">
-                                <rect key="frame" x="553" y="232" width="61" height="16"/>
+                                <rect key="frame" x="553" y="231" width="61" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Unknown" id="3dF-qQ-dgI">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -325,7 +324,7 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xar-8A-JXQ">
-                                <rect key="frame" x="414" y="232" width="135" height="16"/>
+                                <rect key="frame" x="414" y="231" width="135" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Command Line Tools:" id="Mb6-GI-wQC">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -333,7 +332,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pEY-cN-pnh" userLabel="Unavailable warning">
-                                <rect key="frame" x="18" y="205" width="596" height="16"/>
+                                <rect key="frame" x="18" y="204" width="596" height="17"/>
                                 <textFieldCell key="cell" title="Some unavailable devices may belong to an older/newer Xcode version that you still have installed" id="43B-di-0mW">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>

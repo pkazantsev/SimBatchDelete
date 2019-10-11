@@ -15,7 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		48327060233A786B008AA777 /* SimBatchDelete.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimBatchDelete.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		48327060233A786B008AA777 /* SimulatorControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimulatorControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48327063233A786B008AA777 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		48327065233A786B008AA777 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		48327067233A786C008AA777 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -47,7 +47,7 @@
 		48327061233A786B008AA777 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				48327060233A786B008AA777 /* SimBatchDelete.app */,
+				48327060233A786B008AA777 /* SimulatorControl.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -69,9 +69,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4832705F233A786B008AA777 /* SimBatchDelete */ = {
+		4832705F233A786B008AA777 /* SimulatorControl */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 48327070233A786C008AA777 /* Build configuration list for PBXNativeTarget "SimBatchDelete" */;
+			buildConfigurationList = 48327070233A786C008AA777 /* Build configuration list for PBXNativeTarget "SimulatorControl" */;
 			buildPhases = (
 				4832705C233A786B008AA777 /* Sources */,
 				4832705D233A786B008AA777 /* Frameworks */,
@@ -81,9 +81,9 @@
 			);
 			dependencies = (
 			);
-			name = SimBatchDelete;
+			name = SimulatorControl;
 			productName = SimBatchDelete;
-			productReference = 48327060233A786B008AA777 /* SimBatchDelete.app */;
+			productReference = 48327060233A786B008AA777 /* SimulatorControl.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -101,7 +101,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4832705B233A786B008AA777 /* Build configuration list for PBXProject "SimBatchDelete" */;
+			buildConfigurationList = 4832705B233A786B008AA777 /* Build configuration list for PBXProject "SimulatorControl" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -114,7 +114,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4832705F233A786B008AA777 /* SimBatchDelete */,
+				4832705F233A786B008AA777 /* SimulatorControl */,
 			);
 		};
 /* End PBXProject section */
@@ -283,7 +283,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.pakaz.SimBatchDelete;
+				PRODUCT_BUNDLE_IDENTIFIER = net.pakaz.simulatorControl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -303,7 +303,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.pakaz.SimBatchDelete;
+				PRODUCT_BUNDLE_IDENTIFIER = net.pakaz.simulatorControl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -312,7 +312,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4832705B233A786B008AA777 /* Build configuration list for PBXProject "SimBatchDelete" */ = {
+		4832705B233A786B008AA777 /* Build configuration list for PBXProject "SimulatorControl" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4832706E233A786C008AA777 /* Debug */,
@@ -321,7 +321,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		48327070233A786C008AA777 /* Build configuration list for PBXNativeTarget "SimBatchDelete" */ = {
+		48327070233A786C008AA777 /* Build configuration list for PBXNativeTarget "SimulatorControl" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				48327071233A786C008AA777 /* Debug */,
