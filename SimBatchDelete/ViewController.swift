@@ -3,6 +3,12 @@
 //
 
 import Cocoa
+import IOKit
+
+// for maintaining key code for keyboard entry.
+enum KeyCodes {
+    static let delete: UInt16 = 0x33
+}
 
 struct SimViewModel {
 
@@ -193,10 +199,12 @@ extension ViewController: NSTableViewDelegate {
     }
     
     override func keyDown(with event: NSEvent) {
-        guard event.keyCode == 51 else {
-            return
+        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
+        case [.command] where event.keyCode == KeyCodes.delete:
+            self.deleteCurrenltySelectedSimulator()
+        default:
+            break
         }
-        self.deleteCurrenltySelectedSimulator()
     }
     
 }
