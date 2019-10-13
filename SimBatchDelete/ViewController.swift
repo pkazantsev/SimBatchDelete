@@ -3,6 +3,12 @@
 //
 
 import Cocoa
+import IOKit
+
+// for maintaining key code for keyboard entry.
+enum KeyCodes {
+    static let delete: UInt16 = 0x33
+}
 
 struct SimViewModel {
 
@@ -95,27 +101,7 @@ class ViewController: NSViewController {
     }
 
     @IBAction private func deleteSelectedDevices(_ sender: NSButton) {
-        let simsToDelete = self.selectedSims
-        self.selectedSims.removeAll()
-
-        var simsToDeleteCount = simsToDelete.count
-        for sim in simsToDelete.values {
-            self.parser.deleteDevice(sim.identifier) { [weak self] result in
-                DispatchQueue.main.async {
-                    simsToDeleteCount -= 1
-                    switch result {
-                    case .success:
-                        print("\(sim.name) delete successful")
-                    case .failure(let err):
-                        print("\(sim.name) deletion error: \(err)")
-                    }
-
-                    if (simsToDeleteCount <= 0) {
-                        self?.reloadData()
-                    }
-                }
-            }
-        }
+        self.deleteAllCheckboxedSimulators()
     }
 
     private func reloadData() {
@@ -211,5 +197,59 @@ extension ViewController: NSTableViewDelegate {
 
         return cell
     }
+    
+    override func keyDown(with event: NSEvent) {
+        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
+        case [.command] where event.keyCode == KeyCodes.delete:
+            self.deleteCurrenltySelectedSimulator()
+        default:
+            break
+        }
+    }
+    
+}
+
+extension ViewController {
+    private func deleteAllCheckboxedSimulators() {
+        let simsToDelete = self.selectedSims
+        self.selectedSims.removeAll()
+        var simsToDeleteCount = simsToDelete.count
+        for sim in simsToDelete.values {
+            self.parser.deleteDevice(sim.identifier) { [weak self] result in
+                DispatchQueue.main.async {
+                    simsToDeleteCount -= 1
+                    switch result {
+                    case .success:
+                        print("\(sim.name) delete successful")
+                    case .failure(let err):
+                        print("\(sim.name) deletion error: \(err)")
+                    }
+                    if (simsToDeleteCount <= 0) {
+                        self?.reloadData()
+                    }
+                }
+            }
+        }
+    }
+    
+    private func deleteCurrenltySelectedSimulator() {
+        let selectedRowIndex = self.tableView.selectedRow
+        guard selectedRowIndex <= self.simulators.count else {
+            return
+        }
+        let simulator = self.simulators[selectedRowIndex]
+        self.parser.deleteDevice(simulator.identifier) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    print("\(simulator.name) delete successful")
+                case .failure(let err):
+                    print("\(simulator.name) deletion error: \(err)")
+                }
+                self?.reloadData()
+            }
+        }
+    }
+
 }
 
