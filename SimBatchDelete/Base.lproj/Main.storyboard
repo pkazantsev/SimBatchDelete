@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14868"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -67,6 +67,80 @@
             </objects>
             <point key="canvasLocation" x="75" y="250"/>
         </scene>
+        <!--System message-->
+        <scene sceneID="zEZ-bc-QhY">
+            <objects>
+                <viewController title="System message" storyboardIdentifier="ModalSystemMessage" showSeguePresentationStyle="single" id="Yn5-hS-CcK" customClass="MessageViewConroller" customModule="SimBatchDelete" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="yhh-tZ-qzI">
+                        <rect key="frame" x="0.0" y="0.0" width="560" height="253"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GVz-gi-Iid">
+                                <rect key="frame" x="20" y="61" width="520" height="148"/>
+                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="TZT-Cn-2zb">
+                                    <rect key="frame" x="0.0" y="0.0" width="520" height="148"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="otF-bf-hfH">
+                                            <rect key="frame" x="0.0" y="0.0" width="520" height="148"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <size key="minSize" width="520" height="148"/>
+                                            <size key="maxSize" width="520" height="10000000"/>
+                                            <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        </textView>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Ms8-n0-lgm">
+                                    <rect key="frame" x="-100" y="-100" width="240" height="16"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="LEg-fQ-HOJ">
+                                    <rect key="frame" x="504" y="0.0" width="16" height="148"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="u0m-Z3-tqn">
+                                <rect key="frame" x="18" y="217" width="524" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="G4m-Wg-3ZL">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="tAU-mM-YeQ">
+                                <rect key="frame" x="471" y="13" width="75" height="32"/>
+                                <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="w41-cM-vlF">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="dismissController:" target="Yn5-hS-CcK" id="gxx-mQ-y9v"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="u0m-Z3-tqn" firstAttribute="leading" secondItem="yhh-tZ-qzI" secondAttribute="leading" constant="20" symbolic="YES" id="Drp-lp-j9z"/>
+                            <constraint firstItem="u0m-Z3-tqn" firstAttribute="top" secondItem="yhh-tZ-qzI" secondAttribute="top" constant="20" symbolic="YES" id="MmJ-tw-PuT"/>
+                            <constraint firstItem="GVz-gi-Iid" firstAttribute="top" secondItem="u0m-Z3-tqn" secondAttribute="bottom" constant="8" symbolic="YES" id="eqc-Bd-SCd"/>
+                            <constraint firstItem="tAU-mM-YeQ" firstAttribute="top" secondItem="GVz-gi-Iid" secondAttribute="bottom" constant="20" symbolic="YES" id="f4i-9w-bkG"/>
+                            <constraint firstAttribute="trailing" secondItem="tAU-mM-YeQ" secondAttribute="trailing" constant="20" symbolic="YES" id="gjs-iO-9fv"/>
+                            <constraint firstAttribute="bottom" secondItem="tAU-mM-YeQ" secondAttribute="bottom" constant="20" symbolic="YES" id="hER-S5-S2a"/>
+                            <constraint firstItem="GVz-gi-Iid" firstAttribute="leading" secondItem="yhh-tZ-qzI" secondAttribute="leading" constant="20" symbolic="YES" id="iwb-h6-NzB"/>
+                            <constraint firstAttribute="trailing" secondItem="u0m-Z3-tqn" secondAttribute="trailing" constant="20" symbolic="YES" id="p5c-7I-y6W"/>
+                            <constraint firstAttribute="trailing" secondItem="GVz-gi-Iid" secondAttribute="trailing" constant="20" symbolic="YES" id="ryC-bM-QX2"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="headerLabel" destination="u0m-Z3-tqn" id="hu1-fz-Rpp"/>
+                        <outlet property="messageView" destination="otF-bf-hfH" id="No5-tF-qHG"/>
+                    </connections>
+                </viewController>
+                <customObject id="rHJ-H4-fX3" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="759" y="258.5"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
@@ -90,7 +164,7 @@
                                             <tableColumns>
                                                 <tableColumn identifier="checkbox" editable="NO" width="20" minWidth="10" maxWidth="3.4028234663852886e+38" id="etP-RS-xdL" userLabel="Checkbox">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center">
-                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <font key="font" metaFont="menu" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -115,7 +189,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="name" editable="NO" width="231" minWidth="120" maxWidth="1000" id="Wzv-zp-rjd">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Name">
-                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <font key="font" metaFont="menu" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -148,7 +222,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="version" editable="NO" width="100" minWidth="40" maxWidth="1000" id="xda-KA-FBH">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="OS">
-                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <font key="font" metaFont="menu" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -180,7 +254,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="isAvailable" editable="NO" width="60" minWidth="40" maxWidth="1000" id="33D-6k-Bfu">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Available">
-                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <font key="font" metaFont="menu" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -212,7 +286,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="state" width="90" minWidth="10" maxWidth="3.4028234663852886e+38" id="Rso-1X-Tfz">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="State">
-                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <font key="font" metaFont="menu" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -244,7 +318,7 @@
                                                 </tableColumn>
                                                 <tableColumn identifier="comment" width="111" minWidth="60" maxWidth="3.4028234663852886e+38" id="0ya-N2-RHi">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Comment">
-                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <font key="font" metaFont="menu" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </tableHeaderCell>
@@ -298,7 +372,7 @@
                             </scrollView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="u3J-Vm-zfn">
                                 <rect key="frame" x="14" y="222" width="70" height="32"/>
-                                <buttonCell key="cell" type="push" title="Load" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JhA-xm-Zjz">
+                                <buttonCell key="cell" type="push" title="Load" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JhA-xm-Zjz">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
