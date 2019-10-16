@@ -1,5 +1,5 @@
 //
-//  SimctlParser.swift
+//  SimctlCommand.swift
 //
 
 import Foundation
@@ -51,12 +51,26 @@ class SimCtlCommand {
         case emptyResult
         case unexpectedResult(String)
     }
+    
+    struct CommandError: LocalizedError {
+
+        let message: String
+    }
 
     // MARK: - simctl commands
 
     func run(then completion: @escaping (Result<Simulators, ParserError>) -> Void) {
 
-        execute(path: "/usr/bin/xcrun", args: ["simctl", "list", "-j"]) { data in
+        execute(path: "/usr/bin/xcrun", args: ["simctl", "list", "-j"]) { result in
+            let data: Data
+            switch result {
+            case .success(let d):
+                data = d
+            case .failure(let err):
+                completion(.failure(.unexpectedResult(err.message)))
+                return
+            }
+
             let decoder = JSONDecoder()
             do {
                 let sims = try decoder.decode(Simulators.self, from: data)
@@ -68,19 +82,10 @@ class SimCtlCommand {
         }
     }
 
-    func deleteDevice(_ identifier: UUID, then completion: @escaping (Result<Void, ParserError>) -> Void) {
+    func deleteDevice(_ identifier: UUID, then completion: @escaping (Result<Void, CommandError>) -> Void) {
 
-        execute(path: "/usr/bin/xcrun", args: ["simctl", "delete", identifier.uuidString]) { data in
-            guard data.count > 0 else {
-                completion(.success(()))
-                return
-            }
-            if let errorStr = String(data: data, encoding: .utf8) {
-                completion(.failure(.unexpectedResult(errorStr)))
-            }
-            else {
-                completion(.failure(.emptyResult))
-            }
+        execute(path: "/usr/bin/xcrun", args: ["simctl", "delete", identifier.uuidString]) { result in
+            completion(result.map { _ in () })
         }
     }
 
@@ -88,8 +93,17 @@ class SimCtlCommand {
 
     func fetchToolchainVersion(then completion: @escaping (Result<Toolchain, ParserError>) -> Void) {
 
-        execute(path: "/usr/bin/xcodebuild", args: ["-version"]) { data in
-            guard let versionStr = String(data: data, encoding: .utf8) else {
+        execute(path: "/usr/bin/xcodebuild", args: ["-version"]) { result in
+            let data: Data
+            switch result {
+            case .success(let d):
+                data = d
+            case .failure(let err):
+                completion(.failure(.unexpectedResult(err.message)))
+                return
+            }
+
+            guard let versionStr = String(data: data, encoding: .utf8), !versionStr.isEmpty else {
                 completion(.failure(.emptyResult))
                 return
             }
@@ -107,7 +121,7 @@ class SimCtlCommand {
         }
     }
 
-    private func execute(path: String, args: [String], then completion: @escaping (Data) -> Void) {
+    private func execute(path: String, args: [String], then completion: @escaping (Result<Data, CommandError>) -> Void) {
 
         DispatchQueue.global(qos: .background).async {
             let cmd = Process()
@@ -116,9 +130,17 @@ class SimCtlCommand {
 
             let resultHandler = Pipe()
             cmd.standardOutput = resultHandler
+            let errorHandler = Pipe()
+            cmd.standardError = errorHandler
             cmd.terminationHandler = { _ in
-                let data = resultHandler.fileHandleForReading.readDataToEndOfFile()
-                completion(data)
+                let error = errorHandler.fileHandleForReading.readDataToEndOfFile()
+                if !error.isEmpty {
+                    completion(.failure(CommandError(message: String(data: error, encoding: .utf8)!)))
+                }
+                else {
+                    let data = resultHandler.fileHandleForReading.readDataToEndOfFile()
+                    completion(.success(data))
+                }
             }
 
             cmd.launch()

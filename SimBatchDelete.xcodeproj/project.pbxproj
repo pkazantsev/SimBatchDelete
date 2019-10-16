@@ -12,6 +12,7 @@
 		48327068233A786C008AA777 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48327067233A786C008AA777 /* Assets.xcassets */; };
 		4832706B233A786C008AA777 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48327069233A786C008AA777 /* Main.storyboard */; };
 		483E3500233E778300E6703E /* SimctlCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48327073233A78D6008AA777 /* SimctlCommand.swift */; };
+		C83F42FA23550056003E670B /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83F42F923550056003E670B /* MessageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		4832706C233A786C008AA777 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4832706D233A786C008AA777 /* SimBatchDelete.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimBatchDelete.entitlements; sourceTree = "<group>"; };
 		48327073233A78D6008AA777 /* SimctlCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimctlCommand.swift; sourceTree = "<group>"; };
+		C83F42F923550056003E670B /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 				48327063233A786B008AA777 /* AppDelegate.swift */,
 				48327065233A786B008AA777 /* ViewController.swift */,
 				48327073233A78D6008AA777 /* SimctlCommand.swift */,
+				C83F42F923550056003E670B /* MessageViewController.swift */,
 				48327067233A786C008AA777 /* Assets.xcassets */,
 				48327069233A786C008AA777 /* Main.storyboard */,
 				4832706C233A786C008AA777 /* Info.plist */,
@@ -138,6 +141,7 @@
 			files = (
 				483E3500233E778300E6703E /* SimctlCommand.swift in Sources */,
 				48327066233A786B008AA777 /* ViewController.swift in Sources */,
+				C83F42FA23550056003E670B /* MessageViewController.swift in Sources */,
 				48327064233A786B008AA777 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

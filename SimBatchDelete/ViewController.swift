@@ -3,7 +3,6 @@
 //
 
 import Cocoa
-import IOKit
 
 // for maintaining key code for keyboard entry.
 enum KeyCodes {
@@ -58,30 +57,25 @@ class ViewController: NSViewController {
         }
     }
 
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        self.parser.fetchToolchainVersion { [weak self] result in
-            switch result {
-            case .success(let tc):
-                DispatchQueue.main.async {
-                    self?.cmdLineToolsVersionLabel.stringValue = "\(tc.xcodeVersion) (\(tc.xcodeBuildVersion))"
-                }
-            case .failure:
-                break
-            }
-        }
-    }
-
     override func viewDidAppear() {
         super.viewDidAppear()
 
-        self.reloadData()
+        self.getToolchainVersion(onSuccess: { [unowned self] in
+            self.reloadDevicesList()
+        })
+    }
+
+    override func keyDown(with event: NSEvent) {
+        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
+        case .command where event.keyCode == KeyCodes.delete:
+            self.deleteCurrenltySelectedSimulator()
+        default:
+            break
+        }
     }
 
     @IBAction private func run(_ sender: Any) {
-        self.reloadData()
+        self.reloadDevicesList()
     }
 
     @IBAction private func selectionChanged(_ sender: NSButton) {
@@ -104,27 +98,57 @@ class ViewController: NSViewController {
         self.deleteAllCheckboxedSimulators()
     }
 
-    private func reloadData() {
-        self.loadButton?.isEnabled = false
-        self.parser.run { [weak self] result in
-            print("Parser returned \(result)")
+    private func getToolchainVersion(onSuccess completion: @escaping () -> Void) {
+        self.parser.fetchToolchainVersion { [weak self] result in
+            guard let strongSelf = self else {
+                return
+            }
 
             switch result {
-            case .success(let sims):
-                self?.processSimulators(sims)
+            case .success(let tc):
+                DispatchQueue.main.async {
+                    strongSelf.cmdLineToolsVersionLabel.stringValue = "\(tc.xcodeVersion) (\(tc.xcodeBuildVersion))"
+                    completion()
+                }
             case .failure(let error):
-                print("Parser returned error: \(error)")
-                self?.sims = nil
-                self?.simulators = []
-            }
-            DispatchQueue.main.async {
-                self?.loadButton?.isEnabled = true
-                self?.tableView.reloadData()
+                let message: String
+                switch error {
+                case .emptyResult: message = "No error"
+                case .unexpectedResult(let msg): message = msg
+                case .jsonDecodeError(let err): message = String(describing: err)
+                }
+                DispatchQueue.main.async {
+                    let dialog = strongSelf.makeMessageViewController(title: "Toolchain error", message: message)
+                    strongSelf.presentAsSheet(dialog)
+                }
             }
         }
     }
 
-    private func processSimulators(_ sims: Simulators) {
+    private func reloadDevicesList() {
+        self.loadButton?.isEnabled = false
+        self.parser.run { [weak self] result in
+            print("Parser returned \(result)")
+            guard let strongSelf = self else {
+                return
+            }
+
+            switch result {
+            case .success(let sims):
+                strongSelf.processDevicesList(sims)
+            case .failure(let error):
+                print("Parser returned error: \(error)")
+                strongSelf.sims = nil
+                strongSelf.simulators = []
+            }
+            DispatchQueue.main.async {
+                strongSelf.loadButton?.isEnabled = true
+                strongSelf.tableView.reloadData()
+            }
+        }
+    }
+
+    private func processDevicesList(_ sims: Simulators) {
         self.sims = sims
         let runtimes = Dictionary(grouping: sims.runtimes) { $0.identifier }
         // Map devices and the OS versions
@@ -154,6 +178,12 @@ class ViewController: NSViewController {
                 return m1.version.compare(m2.version, options: [.caseInsensitive]) == .orderedAscending
             }
         }
+    }
+
+    private func makeMessageViewController(title: String, message: String) -> MessageViewConroller {
+        let vc = self.storyboard!.instantiateController(withIdentifier: "ModalSystemMessage") as! MessageViewConroller
+        vc.configure(title: title, message: message)
+        return vc
     }
 }
 
@@ -198,18 +228,10 @@ extension ViewController: NSTableViewDelegate {
         return cell
     }
     
-    override func keyDown(with event: NSEvent) {
-        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
-        case [.command] where event.keyCode == KeyCodes.delete:
-            self.deleteCurrenltySelectedSimulator()
-        default:
-            break
-        }
-    }
-    
 }
 
 extension ViewController {
+
     private func deleteAllCheckboxedSimulators() {
         let simsToDelete = self.selectedSims
         self.selectedSims.removeAll()
@@ -225,7 +247,7 @@ extension ViewController {
                         print("\(sim.name) deletion error: \(err)")
                     }
                     if (simsToDeleteCount <= 0) {
-                        self?.reloadData()
+                        self?.reloadDevicesList()
                     }
                 }
             }
@@ -234,7 +256,7 @@ extension ViewController {
     
     private func deleteCurrenltySelectedSimulator() {
         let selectedRowIndex = self.tableView.selectedRow
-        guard selectedRowIndex <= self.simulators.count else {
+        guard selectedRowIndex < self.simulators.count else {
             return
         }
         let simulator = self.simulators[selectedRowIndex]
@@ -246,7 +268,7 @@ extension ViewController {
                 case .failure(let err):
                     print("\(simulator.name) deletion error: \(err)")
                 }
-                self?.reloadData()
+                self?.reloadDevicesList()
             }
         }
     }
