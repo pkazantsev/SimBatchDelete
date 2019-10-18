@@ -37,8 +37,6 @@ class ViewController: NSViewController {
     @IBOutlet private weak var deleteSelectedSimsButton: NSButton!
     @IBOutlet private weak var cmdLineToolsVersionLabel: NSTextField!
 
-    private lazy var parser = SimCtlCommand()
-
     private var sims: Simulators? {
         didSet {
             if self.sims != nil && oldValue == nil {
@@ -99,7 +97,7 @@ class ViewController: NSViewController {
     }
 
     private func getToolchainVersion(onSuccess completion: @escaping () -> Void) {
-        self.parser.fetchToolchainVersion { [weak self] result in
+        ToolchainVersionCommand().run { [weak self] result in
             guard let strongSelf = self else {
                 return
             }
@@ -127,7 +125,7 @@ class ViewController: NSViewController {
 
     private func reloadDevicesList() {
         self.loadButton?.isEnabled = false
-        self.parser.run { [weak self] result in
+        ListCommand().run { [weak self] result in
             print("Parser returned \(result)")
             guard let strongSelf = self else {
                 return
@@ -237,7 +235,7 @@ extension ViewController {
         self.selectedSims.removeAll()
         var simsToDeleteCount = simsToDelete.count
         for sim in simsToDelete.values {
-            self.parser.deleteDevice(sim.identifier) { [weak self] result in
+            DeleteCommand(deviceId: sim.identifier).run { [weak self] result in
                 DispatchQueue.main.async {
                     simsToDeleteCount -= 1
                     switch result {
@@ -260,7 +258,7 @@ extension ViewController {
             return
         }
         let simulator = self.simulators[selectedRowIndex]
-        self.parser.deleteDevice(simulator.identifier) { [weak self] result in
+        DeleteCommand(deviceId: simulator.identifier).run { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success:

@@ -11,8 +11,12 @@
 		48327066233A786B008AA777 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48327065233A786B008AA777 /* ViewController.swift */; };
 		48327068233A786C008AA777 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48327067233A786C008AA777 /* Assets.xcassets */; };
 		4832706B233A786C008AA777 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48327069233A786C008AA777 /* Main.storyboard */; };
-		483E3500233E778300E6703E /* SimctlCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48327073233A78D6008AA777 /* SimctlCommand.swift */; };
 		C83F42FA23550056003E670B /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83F42F923550056003E670B /* MessageViewController.swift */; };
+		C875A977235A4D060037E6D3 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C875A975235A4D060037E6D3 /* Command.swift */; };
+		C875A978235A4D060037E6D3 /* ListCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C875A976235A4D060037E6D3 /* ListCommand.swift */; };
+		C875A97A235A52BA0037E6D3 /* DeleteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C875A979235A52BA0037E6D3 /* DeleteCommand.swift */; };
+		C875A97C235A52D50037E6D3 /* ToolchainVersionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C875A97B235A52D50037E6D3 /* ToolchainVersionCommand.swift */; };
+		C8C6810D235A54CB0061E8FC /* SimCtlCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C6810C235A54CB0061E8FC /* SimCtlCommand.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,8 +27,12 @@
 		4832706A233A786C008AA777 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4832706C233A786C008AA777 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4832706D233A786C008AA777 /* SimBatchDelete.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimBatchDelete.entitlements; sourceTree = "<group>"; };
-		48327073233A78D6008AA777 /* SimctlCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimctlCommand.swift; sourceTree = "<group>"; };
 		C83F42F923550056003E670B /* MessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
+		C875A975235A4D060037E6D3 /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		C875A976235A4D060037E6D3 /* ListCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCommand.swift; sourceTree = "<group>"; };
+		C875A979235A52BA0037E6D3 /* DeleteCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCommand.swift; sourceTree = "<group>"; };
+		C875A97B235A52D50037E6D3 /* ToolchainVersionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolchainVersionCommand.swift; sourceTree = "<group>"; };
+		C8C6810C235A54CB0061E8FC /* SimCtlCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimCtlCommand.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +87,11 @@
 		C875A971235A49270037E6D3 /* Command */ = {
 			isa = PBXGroup;
 			children = (
-				48327073233A78D6008AA777 /* SimctlCommand.swift */,
+				C875A975235A4D060037E6D3 /* Command.swift */,
+				C875A979235A52BA0037E6D3 /* DeleteCommand.swift */,
+				C875A976235A4D060037E6D3 /* ListCommand.swift */,
+				C8C6810C235A54CB0061E8FC /* SimCtlCommand.swift */,
+				C875A97B235A52D50037E6D3 /* ToolchainVersionCommand.swift */,
 			);
 			path = Command;
 			sourceTree = "<group>";
@@ -163,10 +175,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				483E3500233E778300E6703E /* SimctlCommand.swift in Sources */,
+				C875A97A235A52BA0037E6D3 /* DeleteCommand.swift in Sources */,
+				C8C6810D235A54CB0061E8FC /* SimCtlCommand.swift in Sources */,
+				C875A978235A4D060037E6D3 /* ListCommand.swift in Sources */,
 				48327066233A786B008AA777 /* ViewController.swift in Sources */,
 				C83F42FA23550056003E670B /* MessageViewController.swift in Sources */,
 				48327064233A786B008AA777 /* AppDelegate.swift in Sources */,
+				C875A977235A4D060037E6D3 /* Command.swift in Sources */,
+				C875A97C235A52D50037E6D3 /* ToolchainVersionCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
