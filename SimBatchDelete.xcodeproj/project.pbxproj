@@ -57,16 +57,40 @@
 		48327062233A786B008AA777 /* SimBatchDelete */ = {
 			isa = PBXGroup;
 			children = (
-				48327063233A786B008AA777 /* AppDelegate.swift */,
-				48327065233A786B008AA777 /* ViewController.swift */,
-				48327073233A78D6008AA777 /* SimctlCommand.swift */,
-				C83F42F923550056003E670B /* MessageViewController.swift */,
+				C875A970235A49070037E6D3 /* Sources */,
 				48327067233A786C008AA777 /* Assets.xcassets */,
 				48327069233A786C008AA777 /* Main.storyboard */,
 				4832706C233A786C008AA777 /* Info.plist */,
 				4832706D233A786C008AA777 /* SimBatchDelete.entitlements */,
 			);
 			path = SimBatchDelete;
+			sourceTree = "<group>";
+		};
+		C875A970235A49070037E6D3 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				48327063233A786B008AA777 /* AppDelegate.swift */,
+				C875A971235A49270037E6D3 /* Command */,
+				C875A972235A496C0037E6D3 /* Screens */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		C875A971235A49270037E6D3 /* Command */ = {
+			isa = PBXGroup;
+			children = (
+				48327073233A78D6008AA777 /* SimctlCommand.swift */,
+			);
+			path = Command;
+			sourceTree = "<group>";
+		};
+		C875A972235A496C0037E6D3 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				C83F42F923550056003E670B /* MessageViewController.swift */,
+				48327065233A786B008AA777 /* ViewController.swift */,
+			);
+			path = Screens;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
