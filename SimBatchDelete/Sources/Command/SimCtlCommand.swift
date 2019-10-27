@@ -25,7 +25,10 @@ struct SimCtlCommand: Command {
 //        case addmedia            // Add photos, live photos, videos, or contacts to the library of a device.
 //        case install             // Install an app on a device.
 //        case uninstall           // Uninstall an app from a device.
-//        case get_app_container   // Print the path of the installed app's container
+        /// Print the path of the installed app's container
+        ///
+        /// **Useless**. Only works for the booted simulators.
+        case getAppContainer(deviceId: UUID, appBundleId: String, containerType: AppContainerType)
 //        case launch              // Launch an application by identifier on a device.
 //        case terminate           // Terminate an application by identifier on a device.
 //        case spawn               // Spawn a process by executing a given executable on a device.
@@ -42,6 +45,13 @@ struct SimCtlCommand: Command {
 //        case diagnose            // Collect diagnostic information and logs.
 //        case logverbose          // enable or disable verbose logging for a device
 //        case status_bar          // Set or clear status bar overrides
+
+        enum AppContainerType: String {
+
+            case app
+            case data
+            case groups
+        }
     }
 
     private let command: ConsoleCommand
@@ -59,6 +69,8 @@ struct SimCtlCommand: Command {
         switch command {
         case .delete(let deviceId):
             return ["delete", deviceId.uuidString]
+        case .getAppContainer(let deviceId, let appBundleId, let type):
+            return ["get_app_container", deviceId.uuidString, appBundleId, type.rawValue]
         case .list:
             return ["list", "-j"]
         }

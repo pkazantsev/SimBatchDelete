@@ -4,7 +4,7 @@
 
 import Cocoa
 
-final class MessageViewConroller: NSViewController {
+final class MessageViewController: NSViewController {
 
     @IBOutlet private weak var headerLabel: NSTextField!
     @IBOutlet private weak var messageView: NSTextView!

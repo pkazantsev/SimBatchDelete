@@ -34,13 +34,19 @@ struct ConsoleCommand: Command {
             let errorHandler = Pipe()
             cmd.standardError = errorHandler
             cmd.terminationHandler = { _ in
-                let error = errorHandler.fileHandleForReading.readDataToEndOfFile()
-                if !error.isEmpty {
-                    completion(.failure(CommandError(message: String(data: error, encoding: .utf8)!)))
+                let data = resultHandler.fileHandleForReading.readDataToEndOfFile()
+                if !data.isEmpty {
+                    // Data first – ignore the error if data is there
+                    completion(.success(data))
                 }
                 else {
-                    let data = resultHandler.fileHandleForReading.readDataToEndOfFile()
-                    completion(.success(data))
+                    let error = errorHandler.fileHandleForReading.readDataToEndOfFile()
+                    if !error.isEmpty {
+                        completion(.failure(CommandError(message: String(data: error, encoding: .utf8)!)))
+                    }
+                    else {
+                        completion(.failure(CommandError(message: "Error getting devices list: no message")))
+                    }
                 }
             }
 
