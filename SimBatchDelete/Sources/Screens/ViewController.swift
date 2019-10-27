@@ -58,9 +58,13 @@ class ViewController: NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
 
-        self.getToolchainVersion(onSuccess: { [unowned self] in
-            self.reloadDevicesList()
-        })
+//        self.getToolchainVersion(onSuccess: { [unowned self] in
+//            self.reloadDevicesList()
+//        })
+
+        AppsListCommand(deviceId: UUID(uuidString: "4C7AD938-6FC7-458E-AB1C-4EA84F76C6AC")!).run {
+            print(String(describing: $0))
+        }
     }
 
     override func keyDown(with event: NSEvent) {
