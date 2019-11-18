@@ -26,6 +26,8 @@ struct SimCtlCommand: Command {
 //        case install             // Install an app on a device.
 //        case uninstall           // Uninstall an app from a device.
         /// Print the path of the installed app's container
+        ///
+        /// **Useless**. Only works for the booted simulators.
         case getAppContainer(deviceId: UUID, appBundleId: String, containerType: AppContainerType)
 //        case launch              // Launch an application by identifier on a device.
 //        case terminate           // Terminate an application by identifier on a device.

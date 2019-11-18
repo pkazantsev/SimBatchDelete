@@ -11,6 +11,13 @@ struct AppInfo {
     let title: String
 }
 
+private struct AppFetchInfo {
+
+    let id: UUID
+    let bundleId: String
+    let url: URL
+}
+
 struct AppsListCommand: Command {
 
     private static let devicePath = "Developer/CoreSimulator/Devices"
@@ -25,9 +32,9 @@ struct AppsListCommand: Command {
 
     func run(then completion: @escaping (Result<[AppInfo], Error>) -> Void) {
 
-        let appBundleIds: [String]
+        let fetchItems: [AppFetchInfo]
         do {
-            appBundleIds = try self.fetchBundleIds()
+            fetchItems = try self.fetchBundleIds()
         }
         catch {
             completion(.failure(error))
@@ -41,9 +48,9 @@ struct AppsListCommand: Command {
             completion(.success(appContainerPaths))
         }
 
-        for bundleId in appBundleIds {
+        for item in fetchItems {
             group.enter()
-            self.getAppContainerPath(bundleId: bundleId) { result in
+            self.getAppContainerPath(bundleId: item.bundleId, appId: item.id) { result in
                 guard case let .success(path) = result else {
                     group.leave()
                     return
@@ -58,7 +65,7 @@ struct AppsListCommand: Command {
         }
     }
 
-    private func fetchBundleIds() throws -> [String] {
+    private func fetchBundleIds() throws -> [AppFetchInfo] {
         let url = try self.applicationsListPath(deviceId: deviceId)
 
         guard FileManager.default.fileExists(atPath: url.path) else {
@@ -66,25 +73,29 @@ struct AppsListCommand: Command {
         }
 
         return try FileManager.default
-            .contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: [])
+            .contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants])
             .compactMap(fetchAppBundleId)
     }
 
     /// Fetched the full path to the .app
-    private func getAppContainerPath(bundleId: String, then completion: @escaping (Result<URL, CommandError>) -> Void) {
-        SimCtlCommand(command: .getAppContainer(deviceId: deviceId, appBundleId: bundleId, containerType: .app)).run { result in
-            completion(
-                result.flatMap { data in
-                    guard let path = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines) else {
-                        return .failure(CommandError(message: "Command returned invalid string"))
-                    }
-                    guard FileManager.default.fileExists(atPath: path) else {
-                        return .failure(CommandError(message: "Path does not exist: \(path)"))
-                    }
-                    print("'\(bundleId)': \(path)")
-                    return .success(URL(fileURLWithPath: path, isDirectory: true))
-                }
-            )
+    private func getAppContainerPath(bundleId: String, appId: UUID, then completion: @escaping (Result<URL, CommandError>) -> Void) {
+        do {
+            let appContainerUrl = try self.applicationsListPath(deviceId: self.deviceId)
+                .appendingPathComponent(appId.uuidString)
+
+            guard let appUrl = try FileManager.default
+                .contentsOfDirectory(at: appContainerUrl, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants])
+                .filter({ $0.lastPathComponent.hasSuffix(".app") })
+                .first else {
+                    completion(.failure(.init(message: "App with bundle ID '\(bundleId)' has no .app")))
+                    return
+            }
+
+            print("'\(bundleId)': \(appUrl)")
+            completion(.success(appUrl))
+        }
+        catch {
+            completion(.failure(.init(message: error.localizedDescription)))
         }
     }
 
@@ -98,26 +109,28 @@ struct AppsListCommand: Command {
         return URL(fileURLWithPath: Self.devicePath, isDirectory: true, relativeTo: libraryUrl)
             .appendingPathComponent(deviceId.uuidString, isDirectory: true)
             .appendingPathComponent(Self.appsListPath, isDirectory: true)
-
     }
 
-    private func fetchAppBundleId(appUrl: URL) -> String? {
+    private func fetchAppBundleId(appUrl: URL) -> AppFetchInfo? {
         let url = appUrl
             .appendingPathComponent(Self.appInfoPlistFileName)
 
         guard FileManager.default.fileExists(atPath: url.path) else {
             fatalError("File at path \(url.path) does not exist")
         }
-
         guard let result = NSDictionary(contentsOf: url) else {
             return nil
         }
+        guard let bundleId = result.value(forKey: "MCMMetadataIdentifier") as? String else {
+            return nil
+        }
 
-        return result.value(forKey: "MCMMetadataIdentifier") as? String
+        return AppFetchInfo(id: UUID(uuidString: appUrl.lastPathComponent)!, bundleId: bundleId, url: appUrl)
     }
 
     /// Fetching an app info – icon and title
     private func fetchAppInfo(_ appUrl: URL) -> AppInfo {
-        print("Fetch app info from \(appUrl)")
+        print("Fetch app info from \(appUrl.lastPathComponent)")
+        return AppInfo(id: UUID(), image: nil, title: "An App")
     }
 }
