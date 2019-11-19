@@ -18,6 +18,58 @@ private struct AppFetchInfo {
     let url: URL
 }
 
+private struct AppInfoPlist: Decodable {
+
+    enum CodingKeys: String, CodingKey {
+
+        case name = "CFBundleName"
+        case version = "CFBundleShortVersionString"
+        case buildNumber = "CFBundleVersion"
+        case minSystemVersion = "MinimumOSVersion"
+        case supportedDevices = "UIDeviceFamily"
+        case icons = "CFBundleIcons"
+    }
+
+    enum DeviceFamily: Int, Decodable {
+
+        case unknown
+        case iphone
+        case ipad
+    }
+
+    struct Icon: Decodable {
+
+        enum CodingKeys: String, CodingKey {
+
+            case primary = "CFBundlePrimaryIcon"
+        }
+
+        // The primary icon for the Home screen and Settings app among others.
+        let primary: PrimaryIcon
+    }
+
+    struct PrimaryIcon: Decodable {
+
+        enum CodingKeys: String, CodingKey {
+
+            case iconName = "CFBundleIconName"
+            case iconFiles = "CFBundleIconFiles"
+        }
+
+        // The name of the asset, from the bundle’s Asset Catalog, that represents the app icon
+        let iconName: String
+        // Each string in the array contains the name of an icon file.
+        let iconFiles: [String] = []
+    }
+
+    let name: String
+    let version: String
+    let buildNumber: String
+    let minSystemVersion: String
+    let supportedDevices: [DeviceFamily]
+    let icons: Icon?
+}
+
 struct AppsListCommand: Command {
 
     private static let devicePath = "Developer/CoreSimulator/Devices"
@@ -130,7 +182,21 @@ struct AppsListCommand: Command {
 
     /// Fetching an app info – icon and title
     private func fetchAppInfo(_ appUrl: URL) -> AppInfo {
-        print("Fetch app info from \(appUrl.lastPathComponent)")
-        return AppInfo(id: UUID(), image: nil, title: "An App")
+        let infoPlistUrl = appUrl.appendingPathComponent("Info.plist")
+
+        guard FileManager.default.fileExists(atPath: infoPlistUrl.path) else {
+            fatalError("There's no Info.plist in \(appUrl.path)")
+        }
+        do {
+            let data = try Data(contentsOf: infoPlistUrl)
+            let info = try PropertyListDecoder().decode(AppInfoPlist.self, from: data)
+
+            dump(info)
+
+            return AppInfo(id: UUID(), image: nil, title: info.name)
+        }
+        catch {
+            fatalError("Can't read or decode Info.plist in \(appUrl.path): \(error.localizedDescription)")
+        }
     }
 }

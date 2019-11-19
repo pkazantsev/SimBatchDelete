@@ -62,6 +62,9 @@ class ViewController: NSViewController {
 //            self.reloadDevicesList()
 //        })
 
+        // Xcode 11.2 iPhone Xs "3E2AF101-0C1B-498B-9FE4-97B06B055B68"
+        // Xcode 10.3 iPad Pro 9.7" "4C7AD938-6FC7-458E-AB1C-4EA84F76C6AC"
+
         AppsListCommand(deviceId: UUID(uuidString: "4C7AD938-6FC7-458E-AB1C-4EA84F76C6AC")!).run {
             print(String(describing: $0))
         }
