@@ -86,35 +86,21 @@ struct AppsListCommand: Command {
             return
         }
 
-        var appContainerPaths = [AppInfo]()
-
-        let group = DispatchGroup()
-        group.notify(queue: .main) {
-            completion(.success(appContainerPaths))
+        let appInfo: [AppInfo] = appUrls.compactMap { appUrl in
+            let result = self.getAppContainerPath(appContainerUrl: appUrl)
+            guard case let .success(path) = result else { return nil }
+            return self.fetchAppInfo(from: path, appUUID: UUID(uuidString: appUrl.lastPathComponent)!)
         }
 
-        for appUrl in appUrls {
-            group.enter()
-            self.getAppContainerPath(appContainerUrl: appUrl) { result in
-                guard case let .success(path) = result else {
-                    group.leave()
-                    return
-                }
-
-                let app = self.fetchAppInfo(from: path, appUUID: UUID(uuidString: appUrl.lastPathComponent)!)
-                DispatchQueue.main.async {
-                    appContainerPaths.append(app)
-                    group.leave()
-                }
-            }
-        }
+        completion(.success(appInfo))
     }
 
     private func fetchBundleIds() throws -> [URL] {
         let url = try self.applicationsListPath(deviceId: deviceId)
 
         guard FileManager.default.fileExists(atPath: url.path) else {
-            fatalError("File at path \(url.path) does not exist")
+            // No installed apps
+            return []
         }
 
         return try FileManager.default
@@ -122,19 +108,18 @@ struct AppsListCommand: Command {
     }
 
     /// Fetched the full path to the .app
-    private func getAppContainerPath(appContainerUrl: URL, then completion: @escaping (Result<URL, CommandError>) -> Void) {
+    private func getAppContainerPath(appContainerUrl: URL) -> Result<URL, CommandError> {
         do {
             guard let appUrl = try FileManager.default
                 .contentsOfDirectory(at: appContainerUrl, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants])
                 .filter({ $0.lastPathComponent.hasSuffix(".app") })
                 .first else {
-                    completion(.failure(.init(message: "App with UUID '\(appContainerUrl.lastPathComponent)' has no .app")))
-                    return
+                    return .failure(.init(message: "App with UUID '\(appContainerUrl.lastPathComponent)' has no .app"))
             }
-            completion(.success(appUrl))
+            return .success(appUrl)
         }
         catch {
-            completion(.failure(.init(message: error.localizedDescription)))
+            return .failure(.init(message: error.localizedDescription))
         }
     }
 
