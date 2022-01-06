@@ -7,7 +7,7 @@ import Foundation
 enum SimDeviceState: String, Decodable {
     case shutdown = "Shutdown"
     case booted = "Booted"
-    case created = "Created"
+    case creating = "Creating"
 }
 
 struct SimDeviceInfo: Decodable {

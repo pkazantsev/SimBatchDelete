@@ -16,6 +16,7 @@
 		C875A978235A4D060037E6D3 /* ListCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C875A976235A4D060037E6D3 /* ListCommand.swift */; };
 		C875A97A235A52BA0037E6D3 /* DeleteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C875A979235A52BA0037E6D3 /* DeleteCommand.swift */; };
 		C875A97C235A52D50037E6D3 /* ToolchainVersionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C875A97B235A52D50037E6D3 /* ToolchainVersionCommand.swift */; };
+		C8C5391323A65CC6004688F3 /* AppsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C5391223A65CC6004688F3 /* AppsListViewController.swift */; };
 		C8C6810D235A54CB0061E8FC /* SimCtlCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C6810C235A54CB0061E8FC /* SimCtlCommand.swift */; };
 		C8C6810F236385B50061E8FC /* AppsListCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C6810E236385B50061E8FC /* AppsListCommand.swift */; };
 		C8E4F4692389AE6100EB0FBA /* DevicesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E4F4682389AE6100EB0FBA /* DevicesListViewModel.swift */; };
@@ -35,6 +36,7 @@
 		C875A976235A4D060037E6D3 /* ListCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCommand.swift; sourceTree = "<group>"; };
 		C875A979235A52BA0037E6D3 /* DeleteCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCommand.swift; sourceTree = "<group>"; };
 		C875A97B235A52D50037E6D3 /* ToolchainVersionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolchainVersionCommand.swift; sourceTree = "<group>"; };
+		C8C5391223A65CC6004688F3 /* AppsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsListViewController.swift; sourceTree = "<group>"; };
 		C8C6810C235A54CB0061E8FC /* SimCtlCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimCtlCommand.swift; sourceTree = "<group>"; };
 		C8C6810E236385B50061E8FC /* AppsListCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsListCommand.swift; sourceTree = "<group>"; };
 		C8E4F4682389AE6100EB0FBA /* DevicesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesListViewModel.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				C83F42F923550056003E670B /* MessageViewController.swift */,
 				48327065233A786B008AA777 /* DevicesListViewController.swift */,
 				C8E4F4682389AE6100EB0FBA /* DevicesListViewModel.swift */,
+				C8C5391223A65CC6004688F3 /* AppsListViewController.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -194,6 +197,7 @@
 				C8E4F4692389AE6100EB0FBA /* DevicesListViewModel.swift in Sources */,
 				C8C6810F236385B50061E8FC /* AppsListCommand.swift in Sources */,
 				C875A977235A4D060037E6D3 /* Command.swift in Sources */,
+				C8C5391323A65CC6004688F3 /* AppsListViewController.swift in Sources */,
 				C875A97C235A52D50037E6D3 /* ToolchainVersionCommand.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -332,7 +336,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SimBatchDelete/SimBatchDelete.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
@@ -353,7 +357,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = SimBatchDelete/SimBatchDelete.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";

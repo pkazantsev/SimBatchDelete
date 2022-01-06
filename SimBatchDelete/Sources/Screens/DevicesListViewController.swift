@@ -55,6 +55,8 @@ class DevicesListViewController: NSViewController {
         }
     }
 
+    // MARK: -
+
     @IBAction private func run(_ sender: Any) {
         self.reloadDevicesList()
     }
@@ -78,12 +80,6 @@ class DevicesListViewController: NSViewController {
         self.deleteAllCheckboxedSimulators()
     }
 
-    private func makeMessageViewController(title: String, message: String) -> MessageViewController {
-        let vc = self.storyboard!.instantiateController(withIdentifier: "ModalSystemMessage") as! MessageViewController
-        vc.configure(title: title, message: message)
-        return vc
-    }
-
     @objc
     private func showInstalledAppsList() {
         let index = self.tableView.selectedRow
@@ -91,17 +87,45 @@ class DevicesListViewController: NSViewController {
             return
         }
 
-        self.viewModel.installedApps(forDeviceAt: index) { [weak self] apps in
-            // TODO: Show some sheet with the list
+        self.viewModel.installedApps(forDeviceAt: index) { [unowned self] apps in
+            let dialog = self.makeAppsListViewController(with: apps)
+            self.presentAsSheet(dialog)
         }
     }
+
+    // MARK: - Fetching view controllers from the storyboard
+
+    private func makeMessageViewController(title: String, message: String) -> MessageViewController {
+        let vc = self.storyboard!.instantiateController(withIdentifier: "ModalSystemMessage") as! MessageViewController
+        vc.configure(title: title, message: message)
+        return vc
+    }
+    private func makeAppsListViewController(with appsList: [AppInfo]) -> AppsListViewController {
+        let vc = self.storyboard!.instantiateController(withIdentifier: "ModalAppsList") as! AppsListViewController
+        vc.configure(with: appsList)
+        return vc
+    }
 }
+
+// MARK: - Table view data source
 
 extension DevicesListViewController: NSTableViewDataSource {
 
     func numberOfRows(in tableView: NSTableView) -> Int {
         return self.viewModel.simulators.count
     }
+}
+
+// MARK: - Table view delegate
+
+private enum Column: String {
+
+    case checkbox
+    case name
+    case version
+    case isAvailable
+    case state
+    case comment
 }
 
 extension DevicesListViewController: NSTableViewDelegate {
@@ -137,8 +161,9 @@ extension DevicesListViewController: NSTableViewDelegate {
 
         return cell
     }
-    
 }
+
+// MARK: - Accessing the view model
 
 extension DevicesListViewController {
 

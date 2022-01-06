@@ -14,13 +14,3 @@ struct SimViewModel {
     let state: String
     let comment: String
 }
-
-enum Column: String {
-
-    case checkbox
-    case name
-    case version
-    case isAvailable
-    case state
-    case comment
-}

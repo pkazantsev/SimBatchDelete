@@ -9,6 +9,7 @@ struct AppInfo {
     let id: UUID
     let image: NSImage?
     let title: String
+    let bundleId: String
 }
 
 private struct AppInfoPlist: Decodable {
@@ -16,6 +17,7 @@ private struct AppInfoPlist: Decodable {
     private enum CodingKeys: String, CodingKey {
 
         case name = "CFBundleName"
+        case bundleId = "CFBundleIdentifier"
         case version = "CFBundleShortVersionString"
         case buildNumber = "CFBundleVersion"
         case minSystemVersion = "MinimumOSVersion"
@@ -56,6 +58,7 @@ private struct AppInfoPlist: Decodable {
     }
 
     let name: String
+    let bundleId: String
     let version: String
     let buildNumber: String
     let minSystemVersion: String
@@ -148,7 +151,7 @@ struct AppsListCommand: Command {
 
             dump(info)
 
-            return AppInfo(id: appUUID, image: nil, title: info.name)
+            return AppInfo(id: appUUID, image: nil, title: info.name, bundleId: info.bundleId)
         }
         catch {
             fatalError("Can't read or decode Info.plist in \(appUrl.path): \(error.localizedDescription)")
