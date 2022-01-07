@@ -138,6 +138,10 @@ class ViewController: NSViewController {
                 print("Parser returned error: \(error)")
                 strongSelf.sims = nil
                 strongSelf.simulators = []
+                DispatchQueue.main.async {
+                    let dialog = strongSelf.makeMessageViewController(title: "Toolchain error", message: error.localizedDescription)
+                    strongSelf.presentAsSheet(dialog)
+                }
             }
             DispatchQueue.main.async {
                 strongSelf.loadButton?.isEnabled = true
