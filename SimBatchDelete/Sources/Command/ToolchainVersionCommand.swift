@@ -6,8 +6,11 @@ import Foundation
 
 struct ToolchainVersionCommand: Command {
 
-    private let command = ConsoleCommand(cmdPath: "/usr/bin/xcodebuild",
-                                         arguments: ["-version"])
+    private let command = ConsoleCommand(
+        cmdPath: "/usr/bin/xcodebuild",
+        arguments: ["-version"],
+        expectingLongOutput: false
+    )
 
     func run(then completion: @escaping (Result<Toolchain, ParserError>) -> Void) {
 

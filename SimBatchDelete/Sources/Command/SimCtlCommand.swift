@@ -47,8 +47,11 @@ struct SimCtlCommand: Command {
     private let command: ConsoleCommand
 
     init(command: Subcommand) {
-        self.command = ConsoleCommand(cmdPath: "/usr/bin/xcrun",
-                                      arguments: ["simctl"] + Self.arguments(for: command))
+        self.command = ConsoleCommand(
+            cmdPath: "/usr/bin/xcrun",
+            arguments: ["simctl"] + Self.arguments(for: command),
+            expectingLongOutput: command.expectingLongOutput
+        )
     }
 
     func run(then completion: @escaping (Result<Data, CommandError>) -> Void) {
@@ -61,6 +64,17 @@ struct SimCtlCommand: Command {
             return ["delete", deviceId.uuidString]
         case .list:
             return ["list", "-j"]
+        }
+    }
+}
+
+private extension SimCtlCommand.Subcommand {
+    var expectingLongOutput: Bool {
+        switch self {
+        case .delete:
+            return false
+        case .list:
+            return true
         }
     }
 }
